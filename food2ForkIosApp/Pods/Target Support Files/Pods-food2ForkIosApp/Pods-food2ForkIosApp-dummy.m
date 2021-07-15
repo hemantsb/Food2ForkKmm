@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_food2ForkIosApp : NSObject
+@interface PodsDummy_Pods_food2forkIosApp : NSObject
 @end
-@implementation PodsDummy_Pods_food2ForkIosApp
+@implementation PodsDummy_Pods_food2forkIosApp
 @end

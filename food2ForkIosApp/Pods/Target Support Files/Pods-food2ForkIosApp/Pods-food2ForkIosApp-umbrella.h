@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_food2ForkIosAppVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_food2ForkIosAppVersionString[];
+FOUNDATION_EXPORT double Pods_food2forkIosAppVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_food2forkIosAppVersionString[];
 

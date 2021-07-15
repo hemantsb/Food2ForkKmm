@@ -3,8 +3,9 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
-    kotlin(KotlinPlugins.serialization) version Kotlin.version
     id("com.android.library")
+    kotlin(KotlinPlugins.serialization) version Kotlin.version
+
 }
 
 version = "1.0"
@@ -29,6 +30,7 @@ android {
         create("testReleaseApi")
     }
 }
+
 kotlin {
     android()
 
@@ -45,7 +47,7 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         frameworkName = "shared"
-        podfile = project.file("../food2ForkIosApp/Podfile")
+        podfile = project.file("../food2forkIosApp/Podfile")
     }
     
     sourceSets {
@@ -67,3 +69,4 @@ kotlin {
         val iosTest by getting
     }
 }
+

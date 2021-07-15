@@ -1,4 +1,4 @@
-package app.clean.Food2Fork
+package app.clean.food2fork
 
 expect class Platform() {
     val platform: String

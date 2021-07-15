@@ -14,6 +14,6 @@ object Compose {
     private const val composeActivitiesVersion = "1.3.0-alpha03"
     const val activity = "androidx.activity:activity-compose:${composeActivitiesVersion}"
 
-    private const val composeNavigationVerson = "1.0.0-alpha08"
+    private const val composeNavigationVerson = "2.4.0-alpha04"
     const val navigation = "androidx.navigation:navigation-compose:${composeNavigationVerson}"
 }

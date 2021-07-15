@@ -6,6 +6,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Food2Fork"
-include(":food2ForkAndroidApp")
+rootProject.name = "food2fork"
+include(":food2forkAndroidApp")
 include(":shared")

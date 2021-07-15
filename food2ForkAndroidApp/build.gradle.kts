@@ -1,10 +1,9 @@
-import Application.compileSdk
-
 plugins {
-    id(Plugins.androidApplication)
-    kotlin(KotlinPlugins.android)
+    id("com.android.application")
+    kotlin("android")
     kotlin(KotlinPlugins.kapt)
     kotlin(KotlinPlugins.serialization) version Kotlin.version
+
 }
 
 
@@ -38,7 +37,6 @@ android {
     }
     buildToolsVersion = "30.0.3"
 }
-
 dependencies {
     implementation(project(":shared"))
 
