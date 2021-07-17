@@ -5,7 +5,6 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     kotlin(KotlinPlugins.serialization) version Kotlin.version
-
 }
 
 version = "1.0"
@@ -47,7 +46,7 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         frameworkName = "shared"
-        podfile = project.file("../food2forkIosApp/Podfile")
+        podfile = project.file("../iosfood2forkApp/Podfile")
     }
     
     sourceSets {
@@ -69,4 +68,3 @@ kotlin {
         val iosTest by getting
     }
 }
-
