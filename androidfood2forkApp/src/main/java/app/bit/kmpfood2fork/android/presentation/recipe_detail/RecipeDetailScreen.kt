@@ -5,9 +5,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import app.bit.kmpfood2fork.domain.model.Recipe
 
 @Composable
-fun RecipeDetailScreen(recipeId: Int?) {
+fun RecipeDetailScreen(recipeId: Recipe?) {
 
     if (recipeId == null) {
         Text(text = "Not valid Recipe")

@@ -16,6 +16,7 @@ import app.bit.kmpfood2fork.android.presentation.recipe_list.RecipeListViewModel
 import dagger.hilt.android.internal.lifecycle.HiltViewModelFactory
 
 
+@ExperimentalStdlibApi
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
@@ -33,9 +34,13 @@ fun Navigation() {
                 type = NavType.IntType
             })
         ) { navBackStackEntry ->
-            val viewModel: RecipeDetailsViewModel = viewModel()
+            val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
+            val viewModel: RecipeDetailsViewModel = viewModel<RecipeDetailsViewModel>(
+                modelClass = RecipeDetailsViewModel::class.java,
+                factory = factory
+            )
             app.bit.kmpfood2fork.android.presentation.recipe_detail.RecipeDetailScreen(
-                recipeId = viewModel.recipeId.value
+                recipeId = viewModel.recipe.value
             )
         }
     }
