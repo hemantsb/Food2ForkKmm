@@ -1,5 +1,6 @@
 package app.bit.kmpfood2fork.datasource.network
 
+import app.bit.kmpfood2fork.datasource.network.model.RecipeDto
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.json.*
@@ -18,3 +19,4 @@ actual class KtorClientFactory {
         }
     }
 }
+
