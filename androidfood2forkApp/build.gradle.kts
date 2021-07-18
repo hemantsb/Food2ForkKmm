@@ -54,6 +54,8 @@ dependencies {
     implementation(Compose.activity)
     implementation(Compose.navigation)
 
+    implementation(Fragment.fragmentKtx)
+
     implementation(Google.material)
 
     implementation(Hilt.hiltAndroid)
