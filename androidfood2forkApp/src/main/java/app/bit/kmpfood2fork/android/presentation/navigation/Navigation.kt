@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import app.bit.kmpfood2fork.android.presentation.navigation.Screen
 import app.bit.kmpfood2fork.android.presentation.recipe_detail.RecipeDetailsViewModel
 import app.bit.kmpfood2fork.android.presentation.recipe_list.RecipeListScreen
+import app.bit.kmpfood2fork.android.presentation.recipe_list.RecipeListViewModel
 import dagger.hilt.android.internal.lifecycle.HiltViewModelFactory
 
 
@@ -20,6 +21,7 @@ fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
+            val viewModel: RecipeListViewModel = viewModel()
             RecipeListScreen {
                 navController.navigate(Screen.RecipeDetail.route + "/$it")
             }
