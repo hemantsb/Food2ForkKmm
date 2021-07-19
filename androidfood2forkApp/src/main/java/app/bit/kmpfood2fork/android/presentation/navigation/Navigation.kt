@@ -22,7 +22,9 @@ fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
         composable(route = Screen.RecipeList.route) { navBackStackEntry ->
-            val viewModel: RecipeListViewModel = viewModel()
+            val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
+            val viewModel: RecipeListViewModel =
+                viewModel(modelClass = RecipeListViewModel::class.java, factory = factory)
             RecipeListScreen {
                 navController.navigate(Screen.RecipeDetail.route + "/$it")
             }
