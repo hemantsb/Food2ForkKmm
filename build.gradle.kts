@@ -9,6 +9,7 @@ buildscript {
         classpath(Build.buildTools)
         classpath(Build.kotlinGradlePlugin)
         classpath(Build.hiltGradlePlugin)
+        classpath(Build.sqlDelightGradlePlugin)
     }
 }
 

@@ -23,7 +23,7 @@ private val searchRecipeUseCase :  SearchRecipeUseCase
     }
 
     private fun loadRecipe() {
-        searchRecipeUseCase.execute(1,"nice").onEach { dataState ->
+        searchRecipeUseCase.execute(1,"chicken").onEach { dataState ->
             when (dataState) {
                 is DataState.Loading -> println("RecipeDetailVM: loading: ${true}")
                 is DataState.Data -> {
