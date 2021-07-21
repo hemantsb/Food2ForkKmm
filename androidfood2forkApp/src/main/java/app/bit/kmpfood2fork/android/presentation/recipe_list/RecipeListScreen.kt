@@ -1,29 +1,21 @@
 package app.bit.kmpfood2fork.android.presentation.recipe_list
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Text
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.ExperimentalComposeUiApi
+import app.bit.kmpfood2fork.android.presentation.recipe_list.component.RecipeList
+import app.bit.kmpfood2fork.android.presentation.theme.AppTheme
+import app.bit.kmpfood2fork.presentation.recipe_list.RecipeListState
 
+@OptIn(ExperimentalMaterialApi::class)
+@ExperimentalComposeUiApi
 @Composable
-fun RecipeListScreen(onSelectRecipe: (id: Int) -> Unit) {
-    LazyColumn {
-        items(100) { recipe ->
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onSelectRecipe(recipe)
-                }) {
-                Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = "RecipeId  -> $recipe"
-                )
-            }
-        }
+fun RecipeListScreen(recipeState: RecipeListState, onSelectRecipe: (id: Int) -> Unit) {
+    AppTheme(displayProgressBar = recipeState.isLoading) {
+        RecipeList(
+            loading = recipeState.isLoading,
+            recipes = recipeState.recipes,
+            onClickRecipeListItem = onSelectRecipe
+        )
     }
 }

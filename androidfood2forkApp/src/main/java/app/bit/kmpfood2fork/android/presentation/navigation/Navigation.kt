@@ -1,6 +1,7 @@
 package app.bit.kmpfood2fork.android.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -16,6 +17,7 @@ import app.bit.kmpfood2fork.android.presentation.recipe_list.RecipeListViewModel
 import dagger.hilt.android.internal.lifecycle.HiltViewModelFactory
 
 
+@ExperimentalComposeUiApi
 @ExperimentalStdlibApi
 @Composable
 fun Navigation() {
@@ -25,7 +27,7 @@ fun Navigation() {
             val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
             val viewModel: RecipeListViewModel =
                 viewModel(modelClass = RecipeListViewModel::class.java, factory = factory)
-            RecipeListScreen {
+            RecipeListScreen(recipeState =viewModel.state.value ) {
                 navController.navigate(Screen.RecipeDetail.route + "/$it")
             }
         }
