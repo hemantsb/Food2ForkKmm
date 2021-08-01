@@ -7,12 +7,18 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import app.bit.kmpfood2fork.android.presentation.components.RECIPE_IMAGE_HEIGHT
+import app.bit.kmpfood2fork.datasource.network.RecipeServiceImpl
+import app.bit.kmpfood2fork.datasource.network.RecipeServiceImpl.Companion.RECIPE_PAGINATION_PAGE_SIZE
 import app.bit.kmpfood2fork.domain.model.Recipe
 
 @Composable
 fun RecipeList(
     loading: Boolean,
     recipes: List<Recipe>,
+    page: Int,
+    onTriggerNextPage: () -> Unit,
     onClickRecipeListItem: (Int) -> Unit,
 ) {
     Box(
@@ -20,7 +26,7 @@ fun RecipeList(
             .background(color = MaterialTheme.colors.surface)
     ) {
         if (loading && recipes.isEmpty()) {
-            // Loading
+            LoadingShimmerList(imageHeight = RECIPE_IMAGE_HEIGHT.dp)
         } else if (recipes.isEmpty()) {
             // There's nothing here
         } else {
@@ -28,6 +34,9 @@ fun RecipeList(
                 itemsIndexed(
                     items = recipes
                 ) { index, recipe ->
+                    if ((index + 1) >= (page * RECIPE_PAGINATION_PAGE_SIZE) && !loading) {
+                        onTriggerNextPage()
+                    }
                     RecipeCard(
                         recipe = recipe,
                         onClick = {
