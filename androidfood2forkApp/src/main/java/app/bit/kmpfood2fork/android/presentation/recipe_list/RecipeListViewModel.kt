@@ -28,24 +28,41 @@ constructor(
         onTriggerEvent(RecipeListEvent.LoadRecipes)
     }
 
-    fun onTriggerEvent(event: RecipeListEvent){
-        when (event){
+    fun onTriggerEvent(event: RecipeListEvent) {
+        when (event) {
             RecipeListEvent.LoadRecipes -> {
                 loadRecipe()
             }
             RecipeListEvent.NextPage -> {
                 nextPage()
             }
+            RecipeListEvent.NewSearch -> {
+                newSearch()
+            }
+            is RecipeListEvent.UpdateQuery -> {
+                state.value = state.value.copy( query = event.query)
+            }
             else -> {
                 handleError("Invalid Event")
             }
         }
     }
+
     /**
      * Get the next page of recipes
      */
-    private fun nextPage(){
+    private fun nextPage() {
         state.value = state.value.copy(isLoading = true, page = state.value.page + 1)
+        loadRecipe()
+    }
+
+    /**
+     * Perform a new search:
+     * 1. page = 1
+     * 2. list position needs to be reset
+     */
+    private fun newSearch(){
+        state.value = state.value.copy(page = 1, recipes = listOf())
         loadRecipe()
     }
 
@@ -64,10 +81,10 @@ constructor(
     private fun appendRecipes(recipes: List<Recipe>) {
         val curr = ArrayList(state.value.recipes)
         curr.addAll(recipes)
-        state.value = state.value.copy(isLoading = false,recipes = curr)
+        state.value = state.value.copy(isLoading = false, recipes = curr)
     }
 
-    private fun handleError(errorMessage: String){
+    private fun handleError(errorMessage: String) {
         // TODO("Handle errors")
     }
 }
