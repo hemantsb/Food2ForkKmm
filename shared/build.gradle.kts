@@ -1,53 +1,33 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    kotlin(KotlinPlugins.serialization) version Kotlin.version
     id(Plugins.sqlDelight)
+    kotlin(KotlinPlugins.serialization) version Kotlin.version
 }
 
 version = "1.0"
 
-android {
-    compileSdkVersion(Application.compileSdk)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdkVersion(Application.minSdk)
-        targetSdkVersion(Application.targetSdk)
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
-    }
-}
-
 kotlin {
     android()
-
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
+//    iosX64()
+//    iosArm64()
+    //iosSimulatorArm64() sure all ios dependencies support this target
+    val iosTarget: (String, org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget.() -> Unit) -> org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
             ::iosArm64
         else
             ::iosX64
 
     iosTarget("ios") {}
-
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
-        frameworkName = "shared"
-        podfile = project.file("../iosfood2forkApp/Podfile")
+        podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "shared"
+        }
     }
 
     sourceSets {
@@ -77,19 +57,57 @@ kotlin {
                 implementation("junit:junit:4.13.2")
             }
         }
+//        val iosX64Main by getting {
+//            dependencies {
+//                implementation(Ktor.ios)
+//                implementation(SQLDelight.nativeDriver)
+//            }
+//        }
+//        val iosArm64Main by getting {
+//            dependencies {
+//                implementation(Ktor.ios)
+//                implementation(SQLDelight.nativeDriver)
+//            }
+//        }
         val iosMain by getting {
             dependencies {
                 implementation(Ktor.ios)
                 implementation(SQLDelight.nativeDriver)
             }
         }
+//        //val iosSimulatorArm64Main by getting
+//        val iosMain by creating {
+//            dependsOn(commonMain)
+//            iosX64Main.dependsOn(this)
+//            iosArm64Main.dependsOn(this)
+//            //iosSimulatorArm64Main.dependsOn(this)
+//        }
+//        val iosX64Test by getting
+//        val iosArm64Test by getting
+
         val iosTest by getting
-    }
-}
-sqldelight {
-    database("RecipeDatabase") {
-        packageName = "app.bit.kmpfood2fork.datasource.cache"
-        sourceFolders = listOf("sqldelight")
+        //val iosSimulatorArm64Test by getting
+//        val iosTest by creating {
+//            dependsOn(commonTest)
+//            iosX64Test.dependsOn(this)
+//            iosArm64Test.dependsOn(this)
+//            //iosSimulatorArm64Test.dependsOn(this)
+//        }
     }
 }
 
+android {
+    compileSdk = 31
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdk = 22
+        targetSdk = 31
+    }
+}
+
+sqldelight {
+    database("RecipeDatabase") {
+        packageName = "bit.hemant.kmpfood2fork.datasource.cache"
+        sourceFolders = listOf("sqldelight")
+    }
+}
