@@ -5,4 +5,5 @@ sealed class RecipeListEvent{
     object  NextPage : RecipeListEvent()
     object  NewSearch : RecipeListEvent()
     data class  UpdateQuery(val query: String) : RecipeListEvent()
+    data class  SelectCategory(val category: FoodCategory) : RecipeListEvent()
 }

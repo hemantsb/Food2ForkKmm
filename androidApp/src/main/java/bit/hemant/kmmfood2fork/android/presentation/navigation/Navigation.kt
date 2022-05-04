@@ -45,7 +45,7 @@ fun Navigation() {
                 factory = factory
             )
             bit.hemant.kmmfood2fork.android.presentation.recipe_detail.RecipeDetailScreen(
-                recipeId = viewModel.recipe.value
+                recipe = viewModel.recipe.value
             )
         }
     }

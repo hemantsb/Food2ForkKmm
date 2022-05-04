@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import bit.hemant.kmmfood2fork.domain.model.Recipe
 import bit.hemant.kmmfood2fork.domain.util.DataState
 import bit.hemant.kmmfood2fork.interactors.recipe_list.SearchRecipeUseCase
+import bit.hemant.kmmfood2fork.presentation.recipe_list.FoodCategory
 import bit.hemant.kmmfood2fork.presentation.recipe_list.RecipeListEvent
 import bit.hemant.kmmfood2fork.presentation.recipe_list.RecipeListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,13 +41,26 @@ constructor(
                 newSearch()
             }
             is RecipeListEvent.UpdateQuery -> {
-                state.value = state.value.copy( query = event.query)
+                state.value = state.value.copy(query = event.query, selectCategoty = null)
             }
+            is RecipeListEvent.SelectCategory -> {
+                selectCategory(event.category)
+            }
+
             else -> {
                 handleError("Invalid Event")
             }
         }
     }
+
+    /**
+     * Get the next page of recipes
+     */
+    private fun selectCategory(category: FoodCategory) {
+        state.value = state.value.copy(selectCategoty = category, query = category.value)
+        newSearch()
+    }
+
 
     /**
      * Get the next page of recipes
@@ -61,7 +75,7 @@ constructor(
      * 1. page = 1
      * 2. list position needs to be reset
      */
-    private fun newSearch(){
+    private fun newSearch() {
         state.value = state.value.copy(page = 1, recipes = listOf())
         loadRecipe()
     }

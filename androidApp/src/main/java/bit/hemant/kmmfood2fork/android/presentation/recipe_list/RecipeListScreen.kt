@@ -7,6 +7,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import bit.hemant.kmmfood2fork.android.presentation.recipe_list.component.RecipeList
 import bit.hemant.kmmfood2fork.android.presentation.recipe_list.component.SearchAppBar
 import bit.hemant.kmmfood2fork.android.presentation.theme.AppTheme
+import bit.hemant.kmmfood2fork.presentation.recipe_list.FoodCategoryUtil
 import bit.hemant.kmmfood2fork.presentation.recipe_list.RecipeListEvent
 import bit.hemant.kmmfood2fork.presentation.recipe_list.RecipeListState
 
@@ -22,6 +23,9 @@ fun RecipeListScreen(
         Scaffold(topBar = {
             SearchAppBar(
                 query = recipeState.query,
+                selectedCategory = recipeState.selectCategoty,
+                categories = FoodCategoryUtil().getAllFoodCategories(),
+                onSelectCategory = { onTriggerEvent(RecipeListEvent.SelectCategory(it)) },
                 onQueryChanged = { onTriggerEvent(RecipeListEvent.UpdateQuery(it)) }) {
                 onTriggerEvent(RecipeListEvent.NewSearch)
             }
