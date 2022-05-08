@@ -2,7 +2,9 @@ package bit.hemant.kmmfood2fork.interactors.recipe_list
 
 import bit.hemant.kmmfood2fork.datasource.cache.RecipeCache
 import bit.hemant.kmmfood2fork.datasource.network.RecipeService
+import bit.hemant.kmmfood2fork.domain.model.GenericMessageInfo
 import bit.hemant.kmmfood2fork.domain.model.Recipe
+import bit.hemant.kmmfood2fork.domain.model.UiComponentType
 import bit.hemant.kmmfood2fork.domain.util.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,21 +15,32 @@ class SearchRecipeUseCase(
 ) {
 
     fun execute(page: Int, query: String): Flow<DataState<List<Recipe>>> = flow {
-        emit(DataState.Loading)
+        emit(DataState.loading())
         try {
             val recipes = recipeService.search(
                 page = page,
                 query = query,
             )
-            recipeCache.insert(recipes)
-            val cacheResult =if(query.isBlank()){
-                recipeCache.getAll(page)
-            }else{
-                recipeCache.search(query,page)
+            if (query == "Error") {
+                throw Exception("Forced error")
             }
-            emit(DataState.Data(cacheResult))
+            recipeCache.insert(recipes)
+            val cacheResult = if (query.isBlank()) {
+                recipeCache.getAll(page)
+            } else {
+                recipeCache.search(query, page)
+            }
+            emit(DataState.data<List<Recipe>>(message = null, data = cacheResult))
         } catch (e: Exception) {
-            emit(DataState.ErrorMessage(e.message ?: "Unknown Error"))
+            emit(
+                DataState.error<List<Recipe>>(
+                    message = GenericMessageInfo.Builder()
+                        .id("SearchRecipes.Error")
+                        .title("Error")
+                        .uiComponentType(UiComponentType.Dialog)
+                        .description(e.message ?: "Unknown Error")
+                )
+            )
         }
 
     }

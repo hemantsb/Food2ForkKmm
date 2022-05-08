@@ -1,32 +1,34 @@
 package bit.hemant.kmmfood2fork.domain.util
 
-sealed class DataState<out R> {
+import bit.hemant.kmmfood2fork.domain.model.GenericMessageInfo
 
-    data class Data<out T>(val data: T) : DataState<T>()
-    data class Error(val error: ErrorResponse) : DataState<Nothing>()
-    data class ErrorMessage(val errorMessage: String) : DataState<Nothing>()
-    object Loading : DataState<Nothing>()
+data class DataState<T>(
+    val message: GenericMessageInfo.Builder? = null,
+    val data: T? = null,
+    val isLoading: Boolean = false,
+) {
 
+    companion object {
 
-    override fun toString(): String {
-        return when (this) {
-            is Data<*> -> "Success[data=$data]"
-            is Error -> "Error[exception=$error]"
-            is ErrorMessage -> "Error[exception=$errorMessage]"
-            Loading -> "Loading"
+        fun <T> error(
+            message: GenericMessageInfo.Builder,
+        ): DataState<T> {
+            return DataState(
+                message = message,
+                data = null,
+            )
         }
+
+        fun <T> data(
+            message: GenericMessageInfo.Builder? = null,
+            data: T? = null,
+        ): DataState<T> {
+            return DataState(
+                message = message,
+                data = data,
+            )
+        }
+
+        fun <T>loading() = DataState<T>(isLoading = true)
     }
 }
-
-val DataState<*>.succeeded
-    get() = this is DataState.Data && data != null
-
-val DataState<*>.failed
-    get() = this is DataState.Error
-
-fun <T> DataState<T>.successOr(fallback: T): T {
-    return (this as? DataState.Data<T>)?.data ?: fallback
-}
-
-val <T> DataState<T>.data: T?
-    get() = (this as? DataState.Data)?.data

@@ -19,7 +19,9 @@ fun RecipeListScreen(
     onTriggerEvent: (RecipeListEvent) -> Unit,
     onSelectRecipe: (id: Int) -> Unit
 ) {
-    AppTheme(displayProgressBar = recipeState.isLoading) {
+    AppTheme(displayProgressBar = recipeState.isLoading,
+        dialogQueue = recipeState.queue,
+        onRemoveHeadMessageFromQueue = { onTriggerEvent(RecipeListEvent.OnRemoveHeadMessageFromQueue) }) {
         Scaffold(topBar = {
             SearchAppBar(
                 query = recipeState.query,

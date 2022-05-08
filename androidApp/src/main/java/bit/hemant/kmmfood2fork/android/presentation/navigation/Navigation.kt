@@ -1,5 +1,6 @@
 package bit.hemant.kmmfood2fork.android.presentation.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
@@ -15,6 +16,7 @@ import bit.hemant.kmmfood2fork.android.presentation.recipe_list.RecipeListScreen
 import bit.hemant.kmmfood2fork.android.presentation.recipe_list.RecipeListViewModel
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalComposeUiApi
 @ExperimentalStdlibApi
 @Composable
@@ -45,7 +47,8 @@ fun Navigation() {
                 factory = factory
             )
             bit.hemant.kmmfood2fork.android.presentation.recipe_detail.RecipeDetailScreen(
-                recipe = viewModel.recipe.value
+                state = viewModel.state.value,
+                onTriggerEvent = viewModel::onTriggerEvent
             )
         }
     }

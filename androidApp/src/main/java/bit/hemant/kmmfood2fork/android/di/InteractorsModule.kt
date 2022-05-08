@@ -2,7 +2,7 @@ package bit.hemant.kmmfood2fork.android.di
 
 import bit.hemant.kmmfood2fork.datasource.cache.RecipeCache
 import bit.hemant.kmmfood2fork.datasource.network.RecipeService
-import bit.hemant.kmmfood2fork.interactors.recipe_detail.GetRecipeUseCase
+import bit.hemant.kmmfood2fork.interactors.recipe_detail.GetRecipe
 import bit.hemant.kmmfood2fork.interactors.recipe_list.SearchRecipeUseCase
 import dagger.Module
 import dagger.Provides
@@ -27,7 +27,7 @@ class InteractorsModule {
     @Provides
     fun provideGetRecipe(
         recipeCache: RecipeCache,
-    ): GetRecipeUseCase {
-        return GetRecipeUseCase(recipeCache = recipeCache)
+    ): GetRecipe {
+        return GetRecipe(recipeCache = recipeCache)
     }
 }

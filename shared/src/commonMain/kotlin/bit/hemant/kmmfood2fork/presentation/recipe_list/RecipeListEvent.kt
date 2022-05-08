@@ -6,4 +6,5 @@ sealed class RecipeListEvent{
     object  NewSearch : RecipeListEvent()
     data class  UpdateQuery(val query: String) : RecipeListEvent()
     data class  SelectCategory(val category: FoodCategory) : RecipeListEvent()
+    object OnRemoveHeadMessageFromQueue : RecipeListEvent()
 }
